@@ -6,8 +6,16 @@ PHONY: install
 install:
 	npm install
 
-PHONY: run
-run:
+PHONY: run-dev
+run-dev:
+	node dist/server.js
+
+PHONY: secrets
+secrets:
 	@mkdir -p users
-	@echo "${EXTRACT_SECRET}" > users/${EXTRACT_USER}
+	@echo "${EXTRACT_SECRET_GPLAY}" > users/${EXTRACT_USER_GPLAY}
+	@echo "${EXTRACT_SECRET_FREE}" > users/${EXTRACT_USER_FREE}
+
+PHONY: run
+run: secrets
 	node dist/server.js
