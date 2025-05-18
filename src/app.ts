@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
-// @ts-ignore: Missing types for @postlight/parser
-import { parse } from "@postlight/parser";
+// @ts-ignore: Missing types for @jocmp/mercury-parser
+import { parse } from "@jocmp/mercury-parser";
 import { Validator } from "./validator";
 import { log } from "./logger";
 

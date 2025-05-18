@@ -5,8 +5,6 @@ import fs from "fs";
 import path from "path";
 import { calculateSignature } from "./signature";
 
-jest.mock("./logger");
-
 describe("Test the health check", () => {
   test("It should respond to GET", (done) => {
     request(app).get("/health_check").expect(200).end(done);
