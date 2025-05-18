@@ -2,17 +2,17 @@
 
 Extract just the content from a web page.
 
-Extract is a wrapper to turn the [Mercury Parser](https://github.com/postlight/parser) into a web service.
+Extract is a wrapper to turn the [Mercury Parser](https://github.com/jocmp/mercury-parser) into a web service.
 
 ## Why?
 
-Mercury already offers an [API component](https://github.com/postlight/parser-api), meant to be deployed to AWS Lambda. There are a few reasons why this exists as an alternative.
+Postlight used to offer a [API component](https://github.com/postlight/parser-api), meant to be deployed to AWS Lambda. There are a few reasons why this exists as an alternative.
 
 1. Deploy elsewhere. Extract is a vanilla Node.js app, that is meant to run in a VM, and has no platform specific dependencies.
 
-2. Built-in authorization system.
+1. Built-in authorization system.
 
-3. Performance. In my experience, running it on a VM has been faster than the lambda version.
+1. Performance. Running it on a VM can be faster than the lambda version.
 
 Here's a graph where you can see a decrease in average response time around the `17. Feb` mark. This is when Feedbin switched from the lambda hosted version, to extract running on a VPS.
 
@@ -25,27 +25,19 @@ Here's a graph where you can see a decrease in average response time around the 
 2. Clone extract
 
    ```bash
-   git clone https://github.com/feedbin/extract.git
+   git clone https://github.com/jocmp/mercury-extract.git
    ```
 
 3. Install the dependencies.
 
    ```bash
-   cd extract
-   npm install
+   make install
    ```
 
 4. Run the server
 
    ```bash
-   node app/server.js
-   ```
-
-   Alternatively, extract includes an `ecosystem.config.js` to use with [pm2](https://github.com/Unitech/pm2). You could use this in production.
-
-   ```bash
-   npm install --global pm2
-   pm2 start ecosystem.config.js
+   make build run
    ```
 
 ## Usage
@@ -65,7 +57,7 @@ Once a username and password has been created, you can make a request.
 An example request looks like:
 
 ```
-http://localhost:3000/parser/:username/:signature?base64_url=:base64_url
+http://localhost:8080/parser/:username/:signature?base64_url=:base64_url
 ```
 
 The parts that you need are:
@@ -134,3 +126,7 @@ With the output:
   "rendered_pages": 1
 }
 ```
+
+## Attribution
+
+Like with most things related to [Capy Reader](https://github.com/jocmp/capyreader), this repo was forked from [Feedbin](https://github.com/feedbin/feedbin). You can find the maintained source code for that at <https://github.com/feedbin/extract>.
