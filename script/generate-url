@@ -1,0 +1,35 @@
+const crypto = require("crypto");
+const fs = require("fs");
+const path = require("path");
+
+// Usage: node generate-url.js <url>
+if (process.argv.length !== 3) {
+  console.log("Usage: node generate-url.js <url>");
+  process.exit(1);
+}
+
+const user = process.env.EXTRACT_USER;
+const secretPath = path.resolve(__dirname, "../users", user);
+
+if (!fs.existsSync(secretPath)) {
+  console.log(`User not found: ${secretPath}`);
+  process.exit(1);
+}
+
+const secret = fs.readFileSync(secretPath, "utf8").trim();
+const contentUrl = process.argv[2];
+
+const hmac = crypto.createHmac("sha256", secret)
+hmac.update(contentUrl)
+const signature = hmac.digest("hex");
+
+const encodedContentUrl = Buffer.from(contentUrl)
+  .toString("base64")
+  .replace(/\+/g, "-")
+  .replace(/\//g, "_")
+  .replace(/=+$/, "");
+
+const url = `http://localhost:8080/parser/${user}/${signature}?base64_url=${encodedContentUrl}`;
+
+console.log(`Your URL for ${contentUrl}: \n`);
+console.log(`${url}\n`);
