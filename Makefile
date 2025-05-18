@@ -5,3 +5,7 @@ build:
 PHONY: install
 install:
 	npm install
+
+PHONY: run
+run:
+	node dist/server.js
